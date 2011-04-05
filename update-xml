@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd /home/larsi/xmltv
+tv_grab_no_gfeed --quiet > no.xml.tmp && mv no.xml.tmp no.xml
