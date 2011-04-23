@@ -265,8 +265,8 @@
 	(process
 	 (start-process
 	  "recording" (get-buffer-create "*Cat Recording*")
-	  (expand-file-name "start-record" pvr-binary-directory)
-	  file-name device)))
+	  "bash" "-c"
+	  "cat %s > %s" device (shell-quote-argument file-name))))
     (setq pvr-record-kill-timer
 	  (run-at-time (time-subtract stop-time
 				      (list 0 (* -1 (or grace 0))))
