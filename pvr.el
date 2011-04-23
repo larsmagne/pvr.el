@@ -324,7 +324,8 @@
 
 (defun pvr-start-recording (title channel stop grace)
   (let ((device (pvr-choose-device)))
-    (when device
+    (if (not device)
+	(message "No free devices")
       (pvr-set-channel channel device)
       (push (list device (pvr-record (pvr-file-name channel title)
 				     device stop grace))
@@ -368,11 +369,27 @@
 	(if (match-beginning 2)
 	    (setq channel (match-string 2))
 	  (setq freq (match-string 3))
-	  (push (list channel freq) pvr-channel-tuner-map))))))
+	  (push (list channel freq) pvr-channel-tuner-map))))
+    (reverse pvr-channel-tuner-map)))
+
+(defun pvr-choose-channel (channel)
+  "If there's a free video channel, change the channel and return the device."
+  (let ((device (pvr-choose-device)))
+    (if (not device)
+	nil
+      (pvr-set-channel channel device)
+      device)))
+
+(defun pvr-start-server ()
+  (setq server-use-tcp t
+	server-host (system-name)
+	server-name (car (split-string (system-name) "[.]")))
+  (server-start))
 
 (defun pvr ()
   "Start up the PVR."
   (interactive)
+  (pvr-start-server)
   (pvr-parse-configuration-file)
   (pvr-read-channel-file)
   (pvr-parse-program)
