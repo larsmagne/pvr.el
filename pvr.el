@@ -430,7 +430,8 @@
 	(setcar (nthcdr 5 program) (not (nth 5 program)))
 	(pvr-remove-program program)
 	(pvr-insert-program program)
-	(pvr-write-recording-list)))))
+	(pvr-write-recording-list)
+	(pvr-schedule)))))
 
 (defun pvr-edit-start ()
   "Edit start time."
