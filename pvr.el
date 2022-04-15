@@ -28,7 +28,6 @@
 (require 'cl)
 
 (require 'xml)
-(require 'time-date "~/pgnus/lisp/time-date.el")
 
 (defvar pvr-home-directory "~/xmltv/"
   "Where PVR will write and read files from.")
@@ -47,6 +46,8 @@
 
 (defvar pvr-directory "/tv/"
   "Where PVR will store the recorded programs.")
+
+(defvar pvr-denied-channels '("nrk3"))
 
 (defvar pvr-recording-list nil)
 (defvar pvr-program-tree nil)
@@ -113,6 +114,7 @@
 	(wantedp nil))
     (dolist (elem pvr-recording-list)
       (when (and (string-match (cadr (assq 'title elem)) title)
+		 (not (member channel pvr-denied-channels))
 		 (or (null (cadr (assq 'channel elem)))
 		     (string-match (cadr (assq 'channel elem)) channel)))
 	(setq wantedp t)))
