@@ -504,9 +504,9 @@
       (setq command (read-char))
       (cond
        ((eq command ?n)
-	(incf channel))
+	(cl-incf channel))
        ((eq command ?p)
-	(decf channel)))
+	(cl-decf channel)))
       (pvr-set-channel
        (car
 	(elt pvr-channel-tuner-map
