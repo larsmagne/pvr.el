@@ -25,8 +25,6 @@
 
 ;;; Code:
 
-(require 'cl)
-
 (require 'xml)
 
 (defvar pvr-home-directory "~/xmltv/"
@@ -255,7 +253,7 @@
     (setq programs pvr-wanted-programs)
     
     (while (setq program (pop programs))
-      (if (not (equalp (cadr program) (caar programs)))
+      (if (not (cl-equalp (cadr program) (caar programs)))
 	  (setcar (nthcdr 6 program) (* 5 60))
 	;;(message "Matching stop and start: %s %s" (cadr program)
 	;; (caar programs))
